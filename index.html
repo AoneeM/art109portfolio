@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aonee McDonald | Digital Media Artistic</title>
+    <link rel="preconnect" href="https://fonts.google.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body class="home">
+    <!-- //  INTRO  // -->
+    <div class="content-wrapper">
+      <div class="content-bg">
+        <header>
+          <!-- Start content edits below this line. -->
+          <h1>Aonee McDonald</h1>
+          <h2>Digital Media Art Student</h2>
+
+          <!-- End content edits here. -->
+        </header>
+
+        <!-- //  ABOUT ME  // -->
+        <main>
+          <p>Insert bio here <a href="https://christinatruong.com/courses/" target="_blank">courses</a> or my YouTube series <a href="https://www.youtube.com/@madebychristina" target="_blank">Decoded by Christina</a>.</p>
+
+          <p>To view my work and history check out my <a href="resume.html"> resume</a>. Stay Girlypop!</p>
+        </main>
+      </div>
+    </div>
+    <!-- //  FOOTER INFO, SOCIAL MEDIA  // -->
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Set up scene, camera, and renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Arrays to hold falling cherries and flowers
+    const cherries = [];
+    const flowers = [];
+    const cherryCount = 50;
+    const flowerCount = 50;
+
+    // Cherry material and geometry
+    const cherryMaterial = new THREE.MeshPhongMaterial({ color: 0xd2232a });
+    const cherryGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+
+    // Flower material and geometry (pink color)
+    const flowerMaterial = new THREE.MeshPhongMaterial({ color: 0xffc0cb });
+    const flowerGeometry = new THREE.SphereGeometry(0.1, 12, 12);
+
+    // Lighting
+    const light1 = new THREE.PointLight(0xffffff, 1, 100);
+    light1.position.set(10, 10, 10);
+    scene.add(light1);
+
+    const light2 = new THREE.PointLight(0xffffff, 0.5, 100);
+    light2.position.set(-10, -10, 10);
+    scene.add(light2);
+
+    // Create falling cherries
+    for (let i = 0; i < cherryCount; i++) {
+      const cherry = new THREE.Mesh(cherryGeometry, cherryMaterial);
+      cherry.position.set(
+        (Math.random() - 0.5) * 20, // Random x position
+        Math.random() * 20 + 10,    // Random y position
+        (Math.random() - 0.5) * 20  // Random z position
+      );
+      cherry.velocityY = 0.02 + Math.random() * 0.05; // Falling speed
+      cherries.push(cherry);
+      scene.add(cherry);
+    }
+
+    // Create falling flowers
+    for (let i = 0; i < flowerCount; i++) {
+      const flower = new THREE.Mesh(flowerGeometry, flowerMaterial);
+      flower.position.set(
+        (Math.random() - 0.5) * 20, // Random x position
+        Math.random() * 20 + 10,    // Random y position
+        (Math.random() - 0.5) * 20  // Random z position
+      );
+      flower.velocityY = 0.02 + Math.random() * 0.05; // Falling speed
+      flowers.push(flower);
+      scene.add(flower);
+    }
+
+    // Camera position
+    camera.position.z = 5;
+
+    // Animate the cherries and flowers
+    function animate() {
+      requestAnimationFrame(animate);
+
+      cherries.forEach(cherry => {
+        // Move cherries down
+        cherry.position.y -= cherry.velocityY;
+
+        // Reset cherry to top if it falls below a certain point
+        if (cherry.position.y < -10) {
+          cherry.position.y = Math.random() * 10 + 10;
+          cherry.position.x = (Math.random() - 0.5) * 20;
+          cherry.position.z = (Math.random() - 0.5) * 20;
+        }
+      });
+
+      flowers.forEach(flower => {
+        // Move flowers down
+        flower.position.y -= flower.velocityY;
+
+        // Reset flower to top if it falls below a certain point
+        if (flower.position.y < -10) {
+          flower.position.y = Math.random() * 10 + 10;
+          flower.position.x = (Math.random() - 0.5) * 20;
+          flower.position.z = (Math.random() - 0.5) * 20;
+        }
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    // Move cherries and flowers with the mouse
+    function onMouseMove(event) {
+      const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      cherries.forEach(cherry => {
+        cherry.position.x += mouseX * 0.05;
+        cherry.position.z += mouseY * 0.05;
+      });
+
+      flowers.forEach(flower => {
+        flower.position.x += mouseX * 0.05;
+        flower.position.z += mouseY * 0.05;
+      });
+    }
+
+    // Event listener for mouse movement
+    window.addEventListener('mousemove', onMouseMove, false);
+
+    // Handle window resizing
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Start animation
+    animate();
+  </script>
+   <footer>
+    <p>© 2024 by Aonee McDonald |  <a href="aonee.mcdonald@sjsu.edu">aonee.mcdonald@sjsu.edu</a></p>
+
+    <ul class="socials">
+    
+        <a href="https://www.instagram.com/differentkindaartist?utm_source/" target="_blank"><img src="imagesc/icon-logo-instagram.png" alt="My Instagram"></a>
+      </li>
+      <li>
+        <a href="https://ca.linkedin.com/in/" target="_blank"><img src="imagesc/icon-logo-linkedin.png" alt="My LinkedIn profile"></a>
+      </li>
+    
+    </ul>
+  </footer>
+</html>
